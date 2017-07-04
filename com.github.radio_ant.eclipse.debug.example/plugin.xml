@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            id="com.github.radio_ant.eclipse.launcher.example.launchConfigurationType"
+            delegate="com.github.radio_ant.eclipse.launcher.example.ExampleLaunchConfigurationDelegate"
+            modes="run,debug"
+            name="Example launch">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+       <shortcut
+        class="com.github.radio_ant.eclipse.launcher.example.LaunchShortcut"
+        id="com.github.radio_ant.eclipse.launcher.example.shortcut"
+        label="Example Shortcut"
+        modes="run, debug">
+        <contextualLaunch>
+            <enablement>
+                <with
+                    variable="selection">
+                    <count
+                        value="+">
+                    </count>
+                </with>
+            </enablement>
+        </contextualLaunch>
+       </shortcut>
+    </extension>
+    <extension
+      point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+       <launchConfigurationTabGroup
+        class="com.github.radio_ant.eclipse.launcher.example.SampleTabGroup"
+        id="com.github.radio_ant.eclipse.launcher.example.launchConfigurationTabGroup"
+        type="com.github.radio_ant.eclipse.launcher.example.launchConfigurationType">
+    </launchConfigurationTabGroup>
+</extension>
+<extension id="com.github.radio_ant.eclipse.debug.example.breakpoint.marker" point="org.eclipse.core.resources.markers">
+    <!-- persist the marker, so that the referenced breakpoint will be recreated -->
+    <persistent value="true" />
+    <!-- Additional attributes for the marker can be defined, which are also
+        persisted -->
+    <attribute name="CUSTOM_ADDITIONAL_ATTR_WHICH_IS_ALSO_PERSISTED" />
+    <!-- The org.eclipse.debug.core.breakpointMarker super type indicated that
+        this marker is used for a breakpoint -->
+    <super type="org.eclipse.debug.core.breakpointMarker" />
+</extension>
+<extension point="org.eclipse.core.runtime.adapters">
+    <factory adaptableType="com.github.radio_ant.eclipse.debug.example.CustomDebugElement"
+        class="com.github.radio_ant.eclipse.debug.example.CustomDebugElementAdapterFactory">
+        <adapter type="org.eclipse.debug.ui.actions.IToggleBreakpointsTarget">
+        </adapter>
+    </factory>
+</extension>
+</plugin>
